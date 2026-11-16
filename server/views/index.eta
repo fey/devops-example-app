@@ -4,7 +4,7 @@
     <div class="flex flex-wrap items-center gap-8">
       <img class="w-40" src="/images/app.png" alt="Hexlet">
       <div>
-        <p class="text-3xl font-bold">Привет от Хекслета!</p>
+        <p class="text-3xl font-bold">Привет от Хекслета! Новая версия.</p>
         <hr class="my-4 border-gray-200">
         <% if (it.serverMessage) { %>
         <p class="text-lg">Приложение запущено и передает сообщение: <%~ it.serverMessage %></p>

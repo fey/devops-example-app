@@ -1,0 +1,44 @@
+{
+  "name": "paas-js-app",
+  "version": "1.0.0",
+  "description": "Учебное приложение курса «Деплой на PaaS»",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run",
+    "start": "bin/start.sh",
+    "lint": "oxlint .",
+    "lint:fix": "oxfmt . && oxlint --fix .",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check ."
+  },
+  "author": "Hexlet",
+  "license": "ISC",
+  "dependencies": {
+    "@dnlup/fastify-traps": "^3.1.0",
+    "@fastify/static": "^10.1.10",
+    "@fastify/view": "^12.0.1",
+    "@sentry/node": "^10.76.2",
+    "dotenv": "^17.4.2",
+    "eta": "^4.6.0",
+    "fastify": "^5.12.8",
+    "fastify-cli": "^8.0.3",
+    "lodash": "^4.18.1",
+    "pino-pretty": "^13.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.4",
+    "npm-check-updates": "^23.1.1",
+    "oxfmt": "^0.76.0",
+    "oxlint": "^1.91.0",
+    "pino": "^10.4.0",
+    "tailwindcss": "^4.3.4",
+    "vite": "^8.3.6",
+    "vitest": "^4.1.12"
+  },
+  "engines": {
+    "node": ">=20.x"
+  },
+  "packageManager": "pnpm@12.6.0"
+}

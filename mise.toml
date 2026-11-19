@@ -6,20 +6,26 @@ lychee = "latest"
 node = "26"
 "npm:@commitlint/cli" = "latest"
 "npm:@commitlint/config-conventional" = "latest"
+osv-scanner = "latest"
 pkl = "latest"
+pnpm = "12"
 rumdl = "latest"
+shellcheck = "latest"
 typos = "latest"
 
 # Задачи проекта живут здесь, Makefile только проксирует make <задача> в mise run.
-# Первая настройка (AGENTS.md) ставит зависимости стека в setup перед hk install
-# и заполняет test.
+# Точную версию pnpm задаёт packageManager в package.json, здесь только мажор.
 [tasks.setup]
 description = "Поставить зависимости и git-хуки"
-run = ["hk install"]
+run = ["pnpm install", "hk install"]
 
 [tasks.test]
-description = "Тесты стека"
-run = 'echo "test не настроен, см. AGENTS.md" >&2; exit 1'
+description = "Тесты приложения; тест стилей читает собранный dist"
+run = ["pnpm run build", "pnpm test"]
+
+[tasks.start]
+description = "Собрать интерфейс и запустить приложение локально"
+run = ["pnpm run build", "pnpm start"]
 
 [tasks.check]
 description = "Все проверки, тот же набор, что гоняет CI"

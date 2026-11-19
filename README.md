@@ -35,7 +35,7 @@
 | Поле | Значение |
 | --- | --- |
 | Language | Node |
-| Build Command | `npm install --global pnpm@12.6.0 && pnpm install --frozen-lockfile && pnpm run build` |
+| Build Command | `npm install --global pnpm@12.21.0 && pnpm install --frozen-lockfile && pnpm run build` |
 | Start Command | `pnpm start` |
 | Environment | `NODE_VERSION=26`, `PORT=3000`, `SERVER_MESSAGE`, по желанию `SENTRY_DSN` |
 

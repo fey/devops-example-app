@@ -15,6 +15,7 @@ typos = "latest"
 
 # Задачи проекта живут здесь, Makefile только проксирует make <задача> в mise run.
 # Точную версию pnpm задаёт packageManager в package.json, здесь только мажор.
+
 [tasks.setup]
 description = "Поставить зависимости и git-хуки"
 run = ["pnpm install", "hk install"]
@@ -23,9 +24,14 @@ run = ["pnpm install", "hk install"]
 description = "Тесты приложения; тест стилей читает собранный dist"
 run = ["pnpm run build", "pnpm test"]
 
+[tasks.build]
+description = "Собрать приложение той же командой, что Build Command на Render"
+run = ["pnpm install --frozen-lockfile", "pnpm run build"]
+
 [tasks.start]
-description = "Собрать интерфейс и запустить приложение локально"
-run = ["pnpm run build", "pnpm start"]
+description = "Собрать и запустить приложение командой из Start Command на Render"
+depends = ["build"]
+run = "pnpm start"
 
 [tasks.check]
 description = "Все проверки, тот же набор, что гоняет CI"

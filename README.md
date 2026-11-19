@@ -47,6 +47,8 @@ mise run test
 PORT=3000 SERVER_MESSAGE="Первая публикация" mise run start
 ```
 
+`mise run build` и `mise run start` повторяют Build Command и Start Command из таблицы выше, `start` перед запуском сам выполняет `build`.
+
 `make <задача>` вызывает ту же задачу mise.
 
 ## Проверки

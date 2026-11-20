@@ -47,7 +47,7 @@ mise run test
 PORT=3000 SERVER_MESSAGE="Первая публикация" mise run start
 ```
 
-`make build` и `make start` повторяют Build Command и Start Command из таблицы выше, `start` перед запуском сам выполняет `build`. Эти две цели работают без mise, нужен только рантайм стека.
+`make build` и `make start` повторяют Build Command и Start Command из таблицы выше, `start` перед запуском сам выполняет `build`. Эти две цели работают без mise, нужен только Node.js 26, его установка описана в [инструкции Хекслета](https://github.com/Hexlet/ru-instructions/blob/main/nodejs.md).
 
 `make <задача>` вызывает ту же задачу mise.
 

@@ -8,6 +8,7 @@ import pointOfView from "@fastify/view";
 import * as Sentry from "@sentry/node";
 import { Eta } from "eta";
 
+import { connect } from "./db/index.js";
 import addRoutes from "./routes.js";
 
 const __dirname = fileURLToPath(path.dirname(import.meta.url));
@@ -49,6 +50,13 @@ const registerPlugins = (app) => {
 
 export default (app, _options) => {
   registerPlugins(app);
+  // Без DATABASE_URL базы нет, и главная страница выходит без счётчика посещений.
+  const url = process.env.DATABASE_URL;
+  const db = url ? connect(url) : null;
+  app.decorate("db", db);
+  app.addHook("onClose", async () => {
+    await db?.$client.end();
+  });
   addRoutes(app);
   registerErrorHandler(app);
 

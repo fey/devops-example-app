@@ -2,3 +2,11 @@
 # дереву до ближайшего pnpm-workspace.yaml: в клоне внутри кита это воркспейс
 # самого кита, и установка переписывает его лок вместо своего.
 packages: []
+# esbuild ставит drizzle-kit, генератор миграций. Его postinstall проверяет
+# бинарник платформы, без разрешения pnpm 12 роняет установку.
+allowBuilds:
+  esbuild: true
+# drizzle-kit тянет через @esbuild-kit старый esbuild с известной уязвимостью
+# dev-сервера (GHSA-67mh-4wv8-2f99). Загрузчик работает и на исправленной ветке.
+overrides:
+  "@esbuild-kit/core-utils>esbuild": ^0.25.12

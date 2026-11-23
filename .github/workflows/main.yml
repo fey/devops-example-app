@@ -25,6 +25,23 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: read
+    # Тесты с базой идут против этого PostgreSQL. Без TEST_DATABASE_URL
+    # они пропускаются, поэтому локально mise run test работает и без базы.
+    services:
+      postgres:
+        image: postgres:18@sha256:eb63372c1e05c755f55fa30cbd07aecc443676fc6c0fa90b9002d01537841e1a
+        # Сервис живёт только на время job, вход без пароля.
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgresql://postgres@localhost:5432/postgres
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

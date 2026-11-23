@@ -11,6 +11,9 @@
         <% } else { %>
         <p class="text-lg">Приложение запущено, но сообщение сервера не установлено!</p>
         <% } %>
+        <% if (it.visits !== null) { %>
+        <p class="text-lg">Посещений: <%= it.visits %></p>
+        <% } %>
       </div>
     </div>
   </div>

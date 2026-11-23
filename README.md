@@ -24,7 +24,7 @@
 
 | Запрос | Ответ |
 | --- | --- |
-| `GET /` | `200`, заголовок «Привет от Хекслета!» и значение `SERVER_MESSAGE` |
+| `GET /` | `200`, заголовок «Привет от Хекслета!», значение `SERVER_MESSAGE`, с `DATABASE_URL` ещё счётчик посещений |
 | `GET /error` | `500`, событие уходит в Sentry, процесс продолжает работать |
 | другой путь | `404` |
 
@@ -37,7 +37,15 @@
 | Language | Node |
 | Build Command | `npm install --global pnpm@12.21.0 && pnpm install --frozen-lockfile && pnpm run build` |
 | Start Command | `pnpm start` |
-| Environment | `NODE_VERSION=26`, `PORT=3000`, `SERVER_MESSAGE`, по желанию `SENTRY_DSN` |
+| Environment | `NODE_VERSION=26`, `PORT=3000`, `SERVER_MESSAGE`, по желанию `SENTRY_DSN` и `DATABASE_URL` |
+
+## База данных
+
+С переменной `DATABASE_URL` главная страница считает посещения в таблице `page_visits` и показывает строку «Посещений: N». Адрес имеет вид `postgresql://user:password@host:port/name`, порт необязателен. На Render это Internal Database URL базы из того же региона. Без переменной приложение работает без базы, и страница остаётся прежней.
+
+Схема таблиц описана в `server/db/schema.js`, миграции [Drizzle](https://orm.drizzle.team/) лежат в `drizzle`. `bin/start.sh` сначала запускает `node server/migrate.js`, и только потом стартует Fastify. Мигратор Drizzle сам базу не блокирует, поэтому `server/db/index.js` берёт сессионную advisory-блокировку PostgreSQL на время миграций. Из двух экземпляров, запущенных разом, миграцию применяет один, а второй ждёт и видит её уже применённой. Новая миграция создаётся по изменённой схеме командой `pnpm exec drizzle-kit generate`.
+
+Тесты с базой идут, когда задан `TEST_DATABASE_URL`, и очищают эту базу. Без переменной они пропускаются. В CI базу даёт сервис PostgreSQL из `main.yml`.
 
 ## Запуск
 

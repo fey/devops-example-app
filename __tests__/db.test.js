@@ -19,7 +19,9 @@ describe.skipIf(!url)("database", () => {
 
   it("concurrent migrations apply once", async () => {
     // У каждого экземпляра своё подключение, как у отдельных процессов.
-    await Promise.all(Array.from({ length: 5 }, () => runMigrations(url)));
+    const results = await Promise.all(Array.from({ length: 5 }, () => runMigrations(url)));
+    // Миграцию применил один экземпляр, остальные её не повторяли.
+    expect(results.flat()).toEqual(["0000_create_page_visits"]);
 
     const client = new pg.Client({ connectionString: url });
     await client.connect();
@@ -36,6 +38,9 @@ describe.skipIf(!url)("database", () => {
     const app = fastify();
     await init(app);
     try {
+      // HEAD присылают проверки платформы, посещением он не считается.
+      const head = await app.inject({ method: "HEAD", url: "/" });
+      expect(head.statusCode).toBe(200);
       for (const visit of [1, 2]) {
         const res = await app.inject({ method: "GET", url: "/" });
         expect(res.statusCode).toBe(200);

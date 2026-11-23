@@ -6,6 +6,8 @@ import { runMigrations } from "./db/index.js";
 
 const url = process.env.DATABASE_URL;
 if (url) {
-  await runMigrations(url);
+  for (const name of await runMigrations(url)) {
+    console.log(`Applied migration ${name}`);
+  }
   console.log("Migrations are up to date");
 }
